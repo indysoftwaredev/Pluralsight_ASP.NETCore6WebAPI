@@ -36,6 +36,8 @@ builder.Services.AddSingleton<FileExtensionContentTypeProvider>();
 builder.Services.AddDbContext<CityInfoContext>(
     dbContextOptions => dbContextOptions.UseSqlite(builder.Configuration["ConnectionSTrings:CityInfoDBConnectionString"]));
 
+builder.Services.AddScoped<ICityInfoRepository, CityInfoRepository>();
+
 #if DEBUG
 builder.Services.AddTransient<IMailService, LocalMailService>();
 #else

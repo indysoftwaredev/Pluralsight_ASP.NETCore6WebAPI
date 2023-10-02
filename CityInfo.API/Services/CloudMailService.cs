@@ -7,8 +7,10 @@
 
         public CloudMailService(IConfiguration configuration)
         {
-            _mailTo = configuration["mailSettings:mailToAddress"];
-            _mailFrom = configuration["mailSettings:mailFromAddress"];
+            _mailTo = configuration["mailSettings:mailToAddress"] 
+                ?? throw new ArgumentNullException(nameof(configuration));
+            _mailFrom = configuration["mailSettings:mailFromAddress"]
+                ?? throw new ArgumentNullException(nameof(configuration));
         }
 
         public void Send(string subject, string message)
