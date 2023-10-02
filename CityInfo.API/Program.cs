@@ -34,7 +34,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton<FileExtensionContentTypeProvider>();
 
 builder.Services.AddDbContext<CityInfoContext>(
-    dbContextOptions => dbContextOptions.UseSqlite("Data Source=CityInfo.db"));
+    dbContextOptions => dbContextOptions.UseSqlite(builder.Configuration["ConnectionSTrings:CityInfoDBConnectionString"]));
 
 #if DEBUG
 builder.Services.AddTransient<IMailService, LocalMailService>();
