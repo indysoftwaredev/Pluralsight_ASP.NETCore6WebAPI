@@ -9,6 +9,7 @@ namespace CityInfo.API.Profiles
         public PointOfInterestProfile() 
         {
             CreateMap<PointOfInterest, PointOfInterestDto>();
+            CreateMap<PointOfInterestForCreationDto, PointOfInterest>();
         }
     }
 }
