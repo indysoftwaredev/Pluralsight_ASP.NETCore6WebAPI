@@ -33,6 +33,14 @@ namespace CityInfo.API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<PointOfInterestForCreationDto>>> GetPointsOfInterest(int cityId)
         {
+            //demo purposes
+            var cityName = User.Claims.FirstOrDefault(c => c.Type == "city")?.Value;
+
+            //require user city to match the id of the city requested
+            if(!await _repository.CityNameMatchesCityIdAsync(cityName, cityId))
+            {
+                return Forbid();
+            }
 
             try
             {
