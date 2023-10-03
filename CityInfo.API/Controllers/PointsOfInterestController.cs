@@ -102,28 +102,29 @@ namespace CityInfo.API.Controllers
 
         }
 
-        //[HttpPut("{pointOfInterestId}")]
-        //public ActionResult UpdatePointOfInterest(int cityId, int pointOfInterestId, 
-        //    PointOfInterestForUpdateDto pointOfInterest)
-        //{
-        //    var city = _citiesDataStore.Cities.FirstOrDefault(c => c.Id == cityId);
-        //    if (city == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    var pointOfInterestFromStore = city.PointsOfInterest
-        //        .FirstOrDefault(p => p.Id == pointOfInterestId);
-        //    if(pointOfInterestFromStore == null)
-        //    {
-        //        return NotFound();
-        //    }
+        [HttpPut("{pointOfInterestId}")]
+        public async Task<ActionResult> UpdatePointOfInterest(int cityId, int pointOfInterestId,
+            PointOfInterestForUpdateDto pointOfInterest)
+        {
+            if (!await _repository.CityExistsAsync(cityId))
+            {
+                return NotFound();
+            }
 
-        //    pointOfInterestFromStore.Name = pointOfInterest.Name;
-        //    pointOfInterestFromStore .Description = pointOfInterest.Description;
+            var pointOfInterestEntity = await _repository.GetPointOfInterestForCityAsync(cityId, pointOfInterestId);
+            
+            if (pointOfInterestEntity == null)
+            {
+                return NotFound();
+            }
 
-        //    return NoContent();
+            _mapper.Map(pointOfInterest, pointOfInterestEntity);
 
-        //}
+            await _repository.SaveChangesAsync();
+
+            return NoContent();
+
+        }
 
         //[HttpPatch("{pointofinterestid}")]
         //public ActionResult PartiallyUpdatePointOfInterest(
