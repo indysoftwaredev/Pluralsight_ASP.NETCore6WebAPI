@@ -8,8 +8,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CityInfo.API.Controllers
 {
-    [Route("api/cities/{cityId}/pointsofinterest")]
+    [Route("api/v{version:apiVersion}/cities/{cityId}/pointsofinterest")]
     //[Authorize(Policy = "MustBeFromNewYorkCity")]
+    [ApiVersion("2.0")]
     [ApiController]
     public class PointsOfInterestController : ControllerBase
     {
@@ -37,10 +38,10 @@ namespace CityInfo.API.Controllers
             var cityName = User.Claims.FirstOrDefault(c => c.Type == "city")?.Value;
 
             //require user city to match the id of the city requested
-            if(!await _repository.CityNameMatchesCityIdAsync(cityName, cityId))
-            {
-                return Forbid();
-            }
+            //if(!await _repository.CityNameMatchesCityIdAsync(cityName, cityId))
+            //{
+            //    return Forbid();
+            //}
 
             try
             {
